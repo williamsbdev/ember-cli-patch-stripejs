@@ -1,27 +1,24 @@
-# ember-cli-patch-stripejs
+This addon will add Stripe or patch it depending on your enviornment
 
-This README outlines the details of collaborating on this Ember addon.
+In development/test/server builds you will get the following
 
-## Installation
+```javascript
+<script type="text/javascript">
+    var Stripe = {
+        setPublishableKey: function(){
+            console.log("Setting publishable key.");
+        },
+        card: {
+            createToken: function() {
+                console.log("createToken was called.");
+            }
+        }
+    };
+</script>
+```
 
-* `git clone <repository-url>` this repository
-* `cd ember-cli-patch-stripejs`
-* `npm install`
-* `bower install`
+In production you will get the real stripe client library
 
-## Running
-
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-## Running Tests
-
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+```javascript
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+```
